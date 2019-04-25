@@ -1,0 +1,19 @@
+.Desktop .Icon  {
+	width: 64px;
+	margin: 10px;
+}
+
+.Desktop .Icon .Label {
+	color: #ffffff;
+	font-size: 0.6em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+	width: 100%;
+	white-space: nowrap;
+}
+
+.Desktop .Icon .Img {
+	background-color: #da0000;
+	height: 64px;
+}

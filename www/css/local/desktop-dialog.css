@@ -1,0 +1,186 @@
+.Dialog {
+	position: absolute;
+
+	background: #da0000;
+	border-radius: 16px;
+	box-shadow: 0px 0px 50px rgba(0,0,0,0.25) inset;
+	color: #ffffff;
+	font-family: 'Poppins', 'Calibri', sans-serif;
+	max-width: 85%;
+	padding: 16px;
+}
+
+.Dialog header,
+.Dialog section,
+.Dialog footer {
+	margin: 0px;
+	padding: 0px;
+}
+
+.Dialog header {
+	display: flex;
+	align-items: stretch;
+	font-size: 1.6em;
+	line-height: 1em;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+/******************************************************************************
+**** header left side icons/buttons ******************************************/
+
+.Dialog header span {
+	display: flex;
+	align-items: center;
+	flex-grow: 0;
+
+	background: #ffffff;
+	color: #da0000;
+	font-size: 0.75em;
+	font-weight: 400;
+	margin-right: 8px;
+	padding: 0px 12px;
+}
+
+.Dialog header span:first-of-type {
+	border-top-left-radius: 8px;
+}
+
+.Dialog header span:last-of-type {
+	border-bottom-right-radius: 8px;
+}
+
+/******************************************************************************
+**** header title bar ********************************************************/
+
+.Dialog header em {
+	display: block;
+	flex-grow: 1;
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 300;
+	letter-spacing: 0.1em;
+	margin: 0px 8px;
+	overflow: hidden;
+	text-transform: uppercase;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/******************************************************************************
+**** header right side buttons ***********************************************/
+
+.Dialog header strong {
+	display: flex;
+	align-items: center;
+	flex-grow: 0;
+
+	background: transparent;
+	border: 1px solid #fff;
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 0.5em;
+	font-weight: normal;
+	margin-left: 8px;
+	padding: 0px 6px;
+}
+
+.Dialog header strong:hover {
+	background: #ffffff;
+	color: #da0000;
+}
+
+.Dialog header strong:first-of-type {
+	border-bottom-left-radius: 8px;
+}
+
+.Dialog header strong:last-of-type {
+	border-top-right-radius: 8px;
+}
+
+/******************************************************************************
+**** dialog content area *****************************************************/
+
+.Dialog section {
+	font-weight: 300;
+	padding: 32px 32px;
+}
+
+/******************************************************************************
+**** dialog footer area ******************************************************/
+
+.Dialog footer {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+}
+
+/******************************************************************************
+**** footer action buttons ***************************************************/
+
+.Dialog footer a {
+    margin-left: 8px;
+    flex-grow: 0;
+}
+
+.Dialog footer a:link,
+.Dialog footer a:visited,
+.Dialog footer a.Selected:hover {
+	border: 1px solid #ffffff;
+	background: #da0000;
+	color: #ffffff;
+	padding: 0px 12px;
+	text-decoration: none;
+}
+
+.Dialog footer a:active,
+.Dialog footer a:hover,
+.Dialog footer a.Selected {
+	background-color: #fff;
+	color: #da0000;
+}
+
+.Dialog footer a:first-of-type {
+	border-top-left-radius: 6px;
+}
+
+.Dialog footer a:last-of-type {
+	border-bottom-right-radius: 6px;
+}
+
+.Dialog footer a.Disabled {
+	background-color: rgba(255,255,255,0.5) !important;
+	border-color: transparent !important;
+	color: rgba(218,0,0,0.5) !important;
+	cursor: default;
+}
+
+/******************************************************************************
+**** dialog footer status bar*************************************************/
+
+.Dialog footer span {
+    font-size: 0.8em;
+    opacity: 0.75;
+    text-align: right;
+}
+
+/******************************************************************************
+**** dialog utilities ********************************************************/
+
+.Dialog.AnimateScale { transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.Dialog.AnimateSize { transition: top 200ms ease-in-out; }
+
+.Dialog.Maximise {
+	top: 0px;
+	left: 0px;
+
+	border-radius: 0px;
+	height: 100vh;
+	max-height: 100vh;
+	width: 100vw;
+	max-width: 100vw;
+}

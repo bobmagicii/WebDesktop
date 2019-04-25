@@ -1,0 +1,51 @@
+/* global defaults */
+
+* {
+	box-sizing: border-box;
+}
+
+/* desktop work area */
+
+html {
+	height: 100vh;
+	width: 100vw;
+}
+
+body {
+	background: #ffffff;
+	height: 100vh;
+	width: 100vw;
+}
+
+.Screen {
+	position: fixed;
+	top: 0px; left: 0px;
+	height: 100vh; width: 100vw;
+
+	background-color: #000000;
+	z-index: 10;
+}
+
+.Desktop {
+	position: fixed;
+	top: 0px; left: 0px;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+
+	background-color: #000000;
+	height: 100%;
+	width: 100%;
+}
+
+/* various utilities */
+
+.AnimateOpacity { transition: opacity 200ms ease-in-out; }
+
+.ScaleNormal { transform: scale(1.0); }
+.ScaleZero { transform: scale(0.0); }
+.OpacityHalf { opacity: 0.5; }
