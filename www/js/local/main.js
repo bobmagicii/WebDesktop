@@ -7,20 +7,16 @@ setTimeout(function(){
 
 	new Desktop.Icon.Entity({
 		'Screen': '#Screen0',
-		'Label': 'Open Dialog'
-	});
+		'Label': 'Open Dialog',
+		'OnClick': function(){
 
-	for(Iter = 0; Iter < 16; Iter++)
-	new Desktop.Icon.Entity({
-		'Screen': '#Screen0',
-		'Label': 'Icon ' + Iter
-	});
+			new Desktop.Window.Entity({
+				'Title': 'Yolo Swag',
+				'Screen': '#Screen0'
+			});
 
-	//jQuery('#Screen0 .Desktop').addClass('OpacityHalf');
-
-	new Desktop.Dialog.Window({
-		'Title': 'Yolo Swag',
-		'Screen': '#Screen0'
+			return;
+		}
 	});
 
 },500);

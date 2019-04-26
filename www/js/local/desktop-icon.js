@@ -13,7 +13,8 @@ Desktop.Icon.Entity = function(Opt) {
 
 	let Config = {
 		'Screen': '#Screen0',
-		'Label': 'Icon'
+		'Label': 'Icon',
+		'OnClick': null
 	};
 
 	Desktop.Util.MergeProperties(Opt,Config);
@@ -40,7 +41,12 @@ Desktop.Icon.Entity = function(Opt) {
 
 		Element
 		.append(Img)
-		.append(Label);
+		.append(Label)
+
+		if(Config.OnClick)
+		Element.on('click',Config.OnClick);
+
+		////////
 
 		jQuery(Config.Screen)
 		.find('.Desktop')

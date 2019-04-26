@@ -1,0 +1,81 @@
+.Screen {
+	position: fixed;
+	top: 0px; left: 0px;
+	height: 100vh; width: 100vw;
+
+	background-color: #ffffff;
+	z-index: 10;
+}
+
+.Screen .Desktop {
+	position: absolute;
+	top: 0px; left: 0px;
+	z-index: 20;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-end;
+
+	background-color: #ffffff;
+	padding-left: 55px;
+	height: 100%;
+	width: 100%;
+}
+
+.Screen .Desktop {
+	background: linear-gradient(215deg, #eee, #ffffff, #eee);
+	background-size: 400% 400%;
+
+	-webkit-animation: DesktopBackgroundAnimate 30s ease infinite;
+	-moz-animation: DesktopBackgroundAnimate 30s ease infinite;
+	animation: DesktopBackgroundAnimate 30s ease infinite;
+
+}
+
+
+@-webkit-keyframes DesktopBackgroundAnimate {
+	0%{background-position:0% 91%}
+	50%{background-position:100% 10%}
+	100%{background-position:0% 91%}
+}
+@-moz-keyframes DesktopBackgroundAnimate {
+	0%{background-position:0% 91%}
+	50%{background-position:100% 10%}
+	100%{background-position:0% 91%}
+}
+@keyframes DesktopBackgroundAnimate {
+	0%{background-position:0% 91%}
+	50%{background-position:100% 10%}
+	100%{background-position:0% 91%}
+}
+
+.Screen .Taskbar {
+	position: absolute;
+	z-index: 30;
+
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+
+	background-color: #000000;
+	color: #ffffff;
+	height: 100%;
+	transition: width 150ms ease-in-out;
+}
+
+.Screen .Taskbar:hoverr {
+	width: 25vw;
+}
+
+.Screen .Taskbar .Item {
+	background: #888;
+	margin: 10px;
+	padding: 10px;
+	text-align: center;
+}

@@ -1,14 +1,14 @@
-Desktop.Dialog = {
-	Window: null,
-	WindowHeader: null,
-	WindowContent: null,
-	WindowFooter: null
+Desktop.Window = {
+	Entity: null,
+	Header: null,
+	Content: null,
+	Footer: null
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Desktop.Dialog.Window = function(Opt){
+Desktop.Window.Entity = function(Opt){
 	let that = this;
 	let Methods = {};
 
@@ -34,7 +34,7 @@ Desktop.Dialog.Window = function(Opt){
 	Methods.Construct = function(){
 
 		Element = jQuery('<div />');
-		Header = new Desktop.Dialog.WindowHeader(that);
+		Header = new Desktop.Window.Header(that);
 		Content = jQuery('<section>This is a popup box.</section>');
 		Footer = jQuery('<footer />');
 
@@ -74,6 +74,7 @@ Desktop.Dialog.Window = function(Opt){
 
 	Methods.Destroy = function(){
 		Methods.Hide();
+		Element.empty();
 		return;
 	};
 
@@ -120,6 +121,32 @@ Desktop.Dialog.Window = function(Opt){
 
 	Methods.Minimise = function(){
 
+		let TrayIcon;
+
+		if(Element.hasClass('Minimise')) {
+			Element
+			.removeClass('Minimise');
+		}
+
+		else {
+			Element
+			.addClass('Minimise');
+
+			TrayIcon = jQuery('<div />');
+
+			TrayIcon
+			.addClass('Item')
+			.append('<i class="fa fa-fw ' + Config.Icon + '"></i>')
+			.on('click',function(){
+				TrayIcon.remove();
+				Methods.Minimise();
+			});
+
+			jQuery(Config.Screen)
+			.find('.Taskbar')
+			.append(TrayIcon);
+		}
+
 		return;
 	};
 
@@ -141,7 +168,7 @@ Desktop.Dialog.Window = function(Opt){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Desktop.Dialog.WindowHeader = function(Window){
+Desktop.Window.Header = function(Window){
 	let that = this;
 	let Methods = {};
 
@@ -175,6 +202,9 @@ Desktop.Dialog.WindowHeader = function(Window){
 
 		ElMaximise
 		.on('click',function(){ State.Window.Maximise(); });
+
+		ElMinimise
+		.on('click',function(){ State.Window.Minimise(); });
 
 		Element
 		.on('mousedown',Methods.OnMoveStart)
