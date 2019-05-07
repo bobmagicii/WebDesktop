@@ -1,12 +1,49 @@
-var Desktop = {};
+var Desktop = {
+	'Screens': []
+};
 
+jQuery(document)
+.ready(function(){
 
-setTimeout(function(){
+	// <div id="Screen0" class="Screen">
+	//	<div class="Desktop AnimateOpacity"></div>
+	//	<div class="Taskbar"></div>
+	// </div>
 
-	let Iter = 0;
+	let Screen = (
+		jQuery('<div />')
+		.attr('id',('Screen' + Desktop.Screens.length))
+		.addClass('Screen')
+		.append(
+			jQuery('<div />')
+			.addClass('Desktop')
+		)
+		.append(
+			jQuery('<div />')
+			.addClass('Taskbar')
+		)
+	);
+
+	////////
+
+	jQuery('body')
+	.prepend(Screen);
+
+	////////
+
+	jQuery(document)
+	.trigger('Desktop:Ready');
+
+	return;
+});
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+jQuery(document)
+.on('Desktop:Ready',function(){
 
 	new Desktop.Icon.Entity({
-		'Screen': '#Screen0',
 		'Label': 'Open Dialog',
 		'OnClick': function(){
 
@@ -19,4 +56,5 @@ setTimeout(function(){
 		}
 	});
 
-},500);
+	return;
+});
