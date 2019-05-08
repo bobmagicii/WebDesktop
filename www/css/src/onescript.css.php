@@ -6,7 +6,7 @@ require(sprintf(
 ));
 
 $Project = Nether\OneScript\Project::FromFile(sprintf(
-	'%s/onescript.json',
+	'%s/src/onescript.json',
 	dirname(__FILE__,2)
 ));
 

@@ -3,10 +3,10 @@
 	"AddScriptHeader": true,
 	"ContentType": "text\/css",
 	"Directories": [
-		"lib",
-		"local"
+		"../lib",
+		"../local"
 	],
-	"DistDir": "dist",
+	"DistDir": "../dist",
 	"Extensions": [
 		"css"
 	],
