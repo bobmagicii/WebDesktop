@@ -1,0 +1,18 @@
+{
+	"AddFileHeader": true,
+	"AddScriptHeader": true,
+	"ContentType": "text\/javascript",
+	"Directories": [
+		"lib",
+		"local"
+	],
+	"DistDir": "dist",
+	"Extensions": [
+		"js"
+	],
+	"Files": [ ],
+	"Minify": false,
+	"OutputFile": "onescript.js",
+	"OutputMinFile": "onescript.min.js",
+	"Print": false
+}

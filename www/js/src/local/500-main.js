@@ -1,6 +1,3 @@
-var Desktop = {
-	'Screens': []
-};
 
 jQuery(document)
 .ready(function(){

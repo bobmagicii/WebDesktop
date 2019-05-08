@@ -1,0 +1,18 @@
+{
+	"AddFileHeader": true,
+	"AddScriptHeader": true,
+	"ContentType": "text\/css",
+	"Directories": [
+		"lib",
+		"local"
+	],
+	"DistDir": "dist",
+	"Extensions": [
+		"css"
+	],
+	"Files": [ ],
+	"Minify": false,
+	"OutputFile": "onescript.css",
+	"OutputMinFile": "onescript.min.css",
+	"Print": false
+}

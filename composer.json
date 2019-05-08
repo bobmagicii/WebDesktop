@@ -1,0 +1,5 @@
+{
+	"require": {
+		"netherphp/onescript": "^3.0"
+	}
+}
