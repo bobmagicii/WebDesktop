@@ -1,5 +1,5 @@
 /*// nether-onescript //
-@date 2019-05-08 23:23:44
+@date 2019-05-09 01:03:23
 @files [
     "src\\..\/lib\\000-jquery.min.js",
     "src\\..\/lib\\100-bootstrap.bundle.min.js",
@@ -574,7 +574,8 @@ Desktop.Window.Entity = function(Opt){
 	let Config = {
 		'Title': 'Dialog',
 		'Icon': 'fa-asterisk',
-		'Screen': '#Screen0'
+		'Screen': '#Screen0',
+		'Movable': true
 	};
 
 	Desktop.Util.MergeProperties(Opt,Config);
@@ -591,7 +592,7 @@ Desktop.Window.Entity = function(Opt){
 	Methods.Construct = function(){
 
 		Element = jQuery('<div />');
-		Header = new Desktop.Window.Header(that);
+		Header = new Desktop.Window.Header(that,Config);
 		Content = jQuery('<section>This is a popup box.</section>');
 		Footer = jQuery('<footer />');
 
@@ -603,6 +604,9 @@ Desktop.Window.Entity = function(Opt){
 		Header
 		.SetIcon(Config.Icon)
 		.SetTitle(Config.Title);
+
+		Element
+		.on('mousedown',Methods.Focus);
 
 		Element
 		.append(Header.GetElement())
@@ -632,6 +636,13 @@ Desktop.Window.Entity = function(Opt){
 	Methods.Destroy = function(){
 		Methods.Hide();
 		Element.empty();
+		return;
+	};
+
+	Methods.Focus = function(){
+
+		Element.appendTo(Config.Screen);
+
 		return;
 	};
 
@@ -710,7 +721,9 @@ Desktop.Window.Entity = function(Opt){
 	////////
 
 	this.GetElement = Methods.GetElement;
+
 	this.Destroy = Methods.Destroy;
+	this.Focus = Methods.Focus;
 	this.Hide = Methods.Hide;
 	this.Show = Methods.Show;
 	this.Maximise = Methods.Maximise;
@@ -725,7 +738,7 @@ Desktop.Window.Entity = function(Opt){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Desktop.Window.Header = function(Window){
+Desktop.Window.Header = function(Window,Config){
 	let that = this;
 	let Methods = {};
 
@@ -755,27 +768,40 @@ Desktop.Window.Header = function(Window){
 		.append(ElClose = jQuery('<strong><i class="fa fa-fw fa-times"></i></strong>'));
 
 		ElClose
-		.on('click',function(){ State.Window.Destroy(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Destroy();
+		});
 
 		ElMaximise
-		.on('click',function(){ State.Window.Maximise(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Maximise();
+		});
 
 		ElMinimise
-		.on('click',function(){ State.Window.Minimise(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Minimise();
+		});
 
-		Element
-		.on('mousedown',Methods.OnMoveStart)
-		.on('mouseup',Methods.OnMoveStop);
+		if(Config.Movable) {
+			Element
+			.on('mousedown',Methods.OnMoveStart)
+			.on('mouseup',Methods.OnMoveStop);
+		}
 
 		return;
 	};
 
-	Methods.OnMoveStart = function(){
+	Methods.OnMoveStart = function(Ev){
+		Ev.stopPropagation();
 		Desktop.Mouse.RegisterForMove(State.Window.GetElement());
 		return;
 	};
 
-	Methods.OnMoveStop = function(){
+	Methods.OnMoveStop = function(Ev){
+		Ev.stopPropagation();
 		Desktop.Mouse.UnregisterForMove(State.Window.GetElement());
 		return;
 	};
@@ -934,6 +960,20 @@ Desktop.Mouse.OnMouseMove = function(Ev){
 	Desktop.Mouse.X = Ev.clientX;
 	Desktop.Mouse.Y = Ev.clientY;
 
+	jQuery(Desktop.Mouse.Elements)
+	.each(function(){
+
+		let X = this.attr('data-mouse-offset-x');
+		let Y = this.attr('data-mouse-offset-y');
+
+		this.css({
+			'left': (Desktop.Mouse.X - X) + 'px',
+			'top': (Desktop.Mouse.Y - Y) + 'px'
+		});
+
+		return;
+	});
+
 	return;
 };
 
@@ -942,15 +982,34 @@ Desktop.Mouse.RegisterForMove = function(Element){
 	let Index = jQuery.inArray(Element,Desktop.Mouse.Elements);
 
 	if(Index == -1) {
+		Element
+		.attr({
+			'data-mouse-offset-x': (Desktop.Mouse.X - parseInt(Element.css('left'))),
+			'data-mouse-offset-y': (Desktop.Mouse.Y - parseInt(Element.css('top')))
+		});
+
 		(Desktop.Mouse.Elements)
 		.push(Element);
 	}
 
+	//console.log("Mouse Tracked Elements: " + Desktop.Mouse.Elements.length);
 	return;
 };
 
 Desktop.Mouse.UnregisterForMove = function(Element){
 
+	let Index = jQuery.inArray(Element,Desktop.Mouse.Elements);
+
+	if(Index != -1) {
+		(Desktop.Mouse.Elements)
+		.splice(Index,1);
+
+		Element
+		.removeAttr('data-mouse-offset-x')
+		.removeAttr('data-mouse-offset-y');
+	}
+
+	//console.log("Mouse Tracked Elements: " + Desktop.Mouse.Elements.length);
 	return;
 };
 
@@ -1095,12 +1154,10 @@ jQuery(document)
 	new Desktop.Icon.Entity({
 		'Label': 'Open Dialog',
 		'OnClick': function(){
-
 			new Desktop.Window.Entity({
 				'Title': 'Yolo Swag',
 				'Screen': '#Screen0'
 			});
-
 			return;
 		}
 	});

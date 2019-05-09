@@ -43,12 +43,10 @@ jQuery(document)
 	new Desktop.Icon.Entity({
 		'Label': 'Open Dialog',
 		'OnClick': function(){
-
 			new Desktop.Window.Entity({
 				'Title': 'Yolo Swag',
 				'Screen': '#Screen0'
 			});
-
 			return;
 		}
 	});

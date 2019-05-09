@@ -17,7 +17,8 @@ Desktop.Window.Entity = function(Opt){
 	let Config = {
 		'Title': 'Dialog',
 		'Icon': 'fa-asterisk',
-		'Screen': '#Screen0'
+		'Screen': '#Screen0',
+		'Movable': true
 	};
 
 	Desktop.Util.MergeProperties(Opt,Config);
@@ -34,7 +35,7 @@ Desktop.Window.Entity = function(Opt){
 	Methods.Construct = function(){
 
 		Element = jQuery('<div />');
-		Header = new Desktop.Window.Header(that);
+		Header = new Desktop.Window.Header(that,Config);
 		Content = jQuery('<section>This is a popup box.</section>');
 		Footer = jQuery('<footer />');
 
@@ -46,6 +47,9 @@ Desktop.Window.Entity = function(Opt){
 		Header
 		.SetIcon(Config.Icon)
 		.SetTitle(Config.Title);
+
+		Element
+		.on('mousedown',Methods.Focus);
 
 		Element
 		.append(Header.GetElement())
@@ -75,6 +79,13 @@ Desktop.Window.Entity = function(Opt){
 	Methods.Destroy = function(){
 		Methods.Hide();
 		Element.empty();
+		return;
+	};
+
+	Methods.Focus = function(){
+
+		Element.appendTo(Config.Screen);
+
 		return;
 	};
 
@@ -153,7 +164,9 @@ Desktop.Window.Entity = function(Opt){
 	////////
 
 	this.GetElement = Methods.GetElement;
+
 	this.Destroy = Methods.Destroy;
+	this.Focus = Methods.Focus;
 	this.Hide = Methods.Hide;
 	this.Show = Methods.Show;
 	this.Maximise = Methods.Maximise;
@@ -168,7 +181,7 @@ Desktop.Window.Entity = function(Opt){
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Desktop.Window.Header = function(Window){
+Desktop.Window.Header = function(Window,Config){
 	let that = this;
 	let Methods = {};
 
@@ -198,27 +211,40 @@ Desktop.Window.Header = function(Window){
 		.append(ElClose = jQuery('<strong><i class="fa fa-fw fa-times"></i></strong>'));
 
 		ElClose
-		.on('click',function(){ State.Window.Destroy(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Destroy();
+		});
 
 		ElMaximise
-		.on('click',function(){ State.Window.Maximise(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Maximise();
+		});
 
 		ElMinimise
-		.on('click',function(){ State.Window.Minimise(); });
+		.on('click',function(Ev){
+			Ev.stopPropagation();
+			State.Window.Minimise();
+		});
 
-		Element
-		.on('mousedown',Methods.OnMoveStart)
-		.on('mouseup',Methods.OnMoveStop);
+		if(Config.Movable) {
+			Element
+			.on('mousedown',Methods.OnMoveStart)
+			.on('mouseup',Methods.OnMoveStop);
+		}
 
 		return;
 	};
 
-	Methods.OnMoveStart = function(){
+	Methods.OnMoveStart = function(Ev){
+		Ev.stopPropagation();
 		Desktop.Mouse.RegisterForMove(State.Window.GetElement());
 		return;
 	};
 
-	Methods.OnMoveStop = function(){
+	Methods.OnMoveStop = function(Ev){
+		Ev.stopPropagation();
 		Desktop.Mouse.UnregisterForMove(State.Window.GetElement());
 		return;
 	};
